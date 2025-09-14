@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { createMemoryRouter } from "react-router-dom";
-import routes from "../src/routes";
+import routes from "../../src/routes";
 import { RouterProvider } from "react-router-dom";
 
 describe("Root component", () => {
