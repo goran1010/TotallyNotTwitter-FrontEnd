@@ -5,7 +5,7 @@ import SignUp from "../../src/components/SignUp";
 describe("Sign-up component", () => {
   test("Render component", () => {
     render(<SignUp />);
-    const text = screen.getByText("Sign Up");
-    expect(text).toBeInTheDocument();
+    const h1 = screen.getByText("Create your account");
+    expect(h1).toBeInTheDocument();
   });
 });
