@@ -1,4 +1,10 @@
+import { Outlet } from "react-router-dom";
+
 function Root() {
-  return <></>;
+  return (
+    <>
+      <Outlet></Outlet>
+    </>
+  );
 }
 export default Root;
