@@ -10,15 +10,15 @@ export default function SignUp() {
           <input type="text" name="username" id="username" />
         </div>
         <div>
-          <label htmlFor="email">Username</label>
+          <label htmlFor="email">Email</label>
           <input type="email" name="email" id="email" />
         </div>
         <div>
-          <label htmlFor="password">Username</label>
+          <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" />
         </div>
         <div>
-          <label htmlFor="confirm-password">Username</label>
+          <label htmlFor="confirm-password">Confirm Password</label>
           <input
             type="password"
             name="confirm-password"
