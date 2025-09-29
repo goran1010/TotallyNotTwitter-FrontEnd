@@ -25,6 +25,9 @@ export default function SignUp() {
             id="confirm-password"
           />
         </div>
+        <div>
+          <button type="button">Create</button>
+        </div>
       </form>
     </main>
   );
