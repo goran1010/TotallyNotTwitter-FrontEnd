@@ -5,7 +5,7 @@ import routes from "../../src/routes";
 import { RouterProvider } from "react-router-dom";
 
 describe("Render components through url", () => {
-  test("Render Error Page for non-existent url", () => {
+  test("Error Page for non-existent url", () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/non-existent-url"],
     });
@@ -15,7 +15,7 @@ describe("Render components through url", () => {
     expect(text).toBeInTheDocument();
   });
 
-  test("Render Signup Page", () => {
+  test("Signup Page", () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/signup"],
     });
@@ -23,6 +23,18 @@ describe("Render components through url", () => {
 
     const heading = screen.getByRole("heading", {
       name: "Create your account",
+    });
+    expect(heading).toBeInTheDocument();
+  });
+
+  test("Login Page", () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ["/login"],
+    });
+    render(<RouterProvider router={router} />);
+
+    const heading = screen.getByRole("heading", {
+      name: "Please log in",
     });
     expect(heading).toBeInTheDocument();
   });
