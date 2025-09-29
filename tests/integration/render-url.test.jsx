@@ -5,7 +5,7 @@ import routes from "../../src/routes";
 import { RouterProvider } from "react-router-dom";
 
 describe("Render components through url", () => {
-  test("Render Error Page", () => {
+  test("Render Error Page for non-existent url", () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/non-existent-url"],
     });

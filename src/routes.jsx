@@ -9,6 +9,7 @@ const routes = [
     errorElement: <ErrorPage />,
     children: [{ path: "/signup", element: <SignUp /> }],
   },
+  { path: "*", element: <ErrorPage /> },
 ];
 
 export default routes;
