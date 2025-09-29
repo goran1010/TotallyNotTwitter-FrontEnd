@@ -13,11 +13,13 @@ describe("Sign-up component", () => {
     const email = screen.getByLabelText("Email");
     const password = screen.getByLabelText("Password");
     const confirmPassword = screen.getByLabelText("Confirm Password");
+    const button = screen.getByRole("button", { value: "Create" });
 
     expect(heading).toBeInTheDocument();
     expect(username).toBeInTheDocument();
     expect(email).toBeInTheDocument();
     expect(password).toBeInTheDocument();
     expect(confirmPassword).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
   });
 });
