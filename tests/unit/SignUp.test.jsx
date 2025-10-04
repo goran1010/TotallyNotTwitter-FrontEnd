@@ -1,10 +1,15 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import SignUp from "../../src/components/SignUp";
+import { MemoryRouter } from "react-router-dom";
 
 describe("Sign-up component", () => {
   test("Render component", () => {
-    render(<SignUp />);
+    render(
+      <MemoryRouter initialEntries={["/signup"]}>
+        <SignUp />
+      </MemoryRouter>
+    );
 
     const heading = screen.getByRole("heading", {
       value: "Create your account",
