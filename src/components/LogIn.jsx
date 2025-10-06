@@ -1,13 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+const currentUrl = import.meta.env.VITE_API_URL;
 
 export default function LogIn() {
+  const [inputFields, setInputFields] = useState({
+    username: "",
+    password: "",
+  });
+  function handleInputFields(e) {
+    setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+  }
+
+  const navigator = useNavigate();
+
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+
+      const response = await fetch(`${currentUrl}/login`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: inputFields.username,
+          password: inputFields.password,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        return console.log(result);
+      }
+      navigator("/");
+    } catch (err) {
+      console.error(err);
+    }
+  }
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 ">
       <div className="w-full max-w-md p-6 flex flex-col gap-3">
         <h1 className="text-5xl mb-8 text-center font-bold text-gray-900">
           Please log in
         </h1>
-        <form className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
             <label
               htmlFor="username"
@@ -16,6 +52,8 @@ export default function LogIn() {
               Username
             </label>
             <input
+              value={inputFields.username}
+              onChange={handleInputFields}
               type="text"
               name="username"
               id="username"
@@ -30,6 +68,8 @@ export default function LogIn() {
               Password
             </label>
             <input
+              value={inputFields.password}
+              onChange={handleInputFields}
               type="password"
               name="password"
               id="password"
@@ -38,7 +78,7 @@ export default function LogIn() {
           </div>
           <div>
             <button
-              type="button"
+              type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 hover:cursor-pointer active:scale-98"
             >
               Log in
