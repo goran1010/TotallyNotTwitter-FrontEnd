@@ -20,6 +20,7 @@ export default function LogIn() {
       const response = await fetch(`${currentUrl}/login`, {
         mode: "cors",
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

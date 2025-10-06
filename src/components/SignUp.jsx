@@ -23,6 +23,7 @@ export default function SignUp() {
       const response = await fetch(`${currentUrl}/signup`, {
         mode: "cors",
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
