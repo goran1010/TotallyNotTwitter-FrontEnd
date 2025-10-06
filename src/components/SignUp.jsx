@@ -4,32 +4,21 @@ import { useNavigate } from "react-router-dom";
 const currentUrl = import.meta.env.VITE_API_URL;
 
 export default function SignUp() {
-  const [username, setUsername] = useState("");
-  function handleUsername(e) {
-    setUsername(e.target.value);
-  }
-  const [email, setEmail] = useState("");
-  function handleEmail(e) {
-    setEmail(e.target.value);
-  }
-  const [password, setPassword] = useState("");
-  function handlePassword(e) {
-    setPassword(e.target.value);
-  }
-  const [confirmPassword, setConfirmPassword] = useState("");
-  function handleConfirmPassword(e) {
-    setConfirmPassword(e.target.value);
+  const [inputFields, setInputFields] = useState({
+    username: "",
+    email: "",
+    password: "",
+    ["confirm-password"]: "",
+  });
+  function handleInputFields(e) {
+    setInputFields({ ...inputFields, [e.target.name]: e.target.value });
   }
 
   const navigator = useNavigate();
+
   async function handleSubmit(e) {
     try {
       e.preventDefault();
-      const formData = new FormData();
-      formData.append("username", username);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("confirm-password", confirmPassword);
 
       const response = await fetch(`${currentUrl}/signup`, {
         mode: "cors",
@@ -38,10 +27,10 @@ export default function SignUp() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username,
-          email,
-          password,
-          confirmPassword,
+          username: inputFields.username,
+          email: inputFields.email,
+          password: inputFields.password,
+          ["confirm-password"]: inputFields["confirm-password"],
         }),
       });
       const result = await response.json();
@@ -71,8 +60,8 @@ export default function SignUp() {
               Username
             </label>
             <input
-              value={username}
-              onChange={handleUsername}
+              value={inputFields.username}
+              onChange={handleInputFields}
               type="text"
               name="username"
               id="username"
@@ -87,8 +76,8 @@ export default function SignUp() {
               Email
             </label>
             <input
-              value={email}
-              onChange={handleEmail}
+              value={inputFields.email}
+              onChange={handleInputFields}
               type="email"
               name="email"
               id="email"
@@ -103,8 +92,8 @@ export default function SignUp() {
               Password
             </label>
             <input
-              value={password}
-              onChange={handlePassword}
+              value={inputFields.password}
+              onChange={handleInputFields}
               type="password"
               name="password"
               id="password"
@@ -119,8 +108,8 @@ export default function SignUp() {
               Confirm Password
             </label>
             <input
-              value={confirmPassword}
-              onChange={handleConfirmPassword}
+              value={inputFields.confirmPassword}
+              onChange={handleInputFields}
               type="password"
               name="confirm-password"
               id="confirm-password"
