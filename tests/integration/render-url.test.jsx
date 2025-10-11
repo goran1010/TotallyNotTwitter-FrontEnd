@@ -4,7 +4,7 @@ import { createMemoryRouter } from "react-router-dom";
 import routes from "../../src/routes";
 import { RouterProvider } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, vi } from "vitest";
+import { beforeEach, vi, afterEach } from "vitest";
 
 describe("Render components through url", () => {
   test("Error Page for non-existent url", () => {
@@ -43,8 +43,15 @@ describe("Render components through url", () => {
 });
 
 describe("redirects after fetching", () => {
+  let globalFetch;
+
   beforeEach(() => {
+    globalFetch = global.fetch;
     global.fetch = vi.fn();
+  });
+
+  afterEach(() => {
+    global.fetch = globalFetch;
   });
 
   test("SignUp redirect to LogIn after success", async () => {
