@@ -7,6 +7,7 @@ import Main from "./components/Main";
 import Profile from "./components/Profile";
 import Followers from "./components/Followers";
 import Following from "./components/Following";
+import { Navigate } from "react-router-dom";
 
 const routes = [
   {
@@ -17,13 +18,10 @@ const routes = [
       { path: "signup", element: <SignUp /> },
       { path: "login", element: <LogIn /> },
       {
-        path: "/",
+        path: "",
         element: <Main />,
         children: [
-          {
-            path: "/",
-            element: <Home />,
-          },
+          { index: true, element: <Navigate to="home" replace /> },
           { path: "home", element: <Home /> },
           { path: "profile", element: <Profile /> },
           { path: "followers", element: <Followers /> },
