@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const currentUrl = import.meta.env.VITE_API_URL;
 
 export default function SignUp() {
   const [inputFields, setInputFields] = useState({
@@ -18,12 +17,14 @@ export default function SignUp() {
 
   async function handleSubmit(e) {
     try {
+      const currentUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:3000";
       e.preventDefault();
 
       const response = await fetch(`${currentUrl}/signup`, {
         mode: "cors",
         method: "POST",
-        credentials: 'include',
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,10 +35,11 @@ export default function SignUp() {
           ["confirm-password"]: inputFields["confirm-password"],
         }),
       });
-      const result = await response.json();
-      if (!response.ok) {
-        return console.log(result);
+
+      if (!response?.ok) {
+        return console.log(response);
       }
+      await response.json();
       navigator("/login");
     } catch (err) {
       console.error(err);
