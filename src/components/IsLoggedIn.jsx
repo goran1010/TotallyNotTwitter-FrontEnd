@@ -1,5 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 
 export default function IsLoggedIn() {
-  return <Outlet />;
+  const { user, setUser } = useContext(UserContext);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return <Outlet context={{ user, setUser }} />;
 }
