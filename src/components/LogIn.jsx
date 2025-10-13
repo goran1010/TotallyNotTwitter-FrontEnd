@@ -11,7 +11,7 @@ export default function LogIn() {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value });
   }
 
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     try {
@@ -33,7 +33,7 @@ export default function LogIn() {
       if (!response.ok) {
         return console.log(result);
       }
-      navigator("/");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
