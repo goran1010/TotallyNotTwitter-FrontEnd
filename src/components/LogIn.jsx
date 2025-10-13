@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useState } from "react";
 const currentUrl = import.meta.env.VITE_API_URL;
 
 export default function LogIn() {
+  const { setUser } = useOutletContext();
   const [inputFields, setInputFields] = useState({
     username: "",
     password: "",
@@ -29,12 +30,15 @@ export default function LogIn() {
           password: inputFields.password,
         }),
       });
-      const result = await response.json();
+      const data = await response.json();
       if (!response.ok) {
-        return console.log(result);
+        // eslint-disable-next-line no-console
+        return console.log(data);
       }
+      setUser(data);
       navigate("/");
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   }

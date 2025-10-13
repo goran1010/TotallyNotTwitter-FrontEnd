@@ -6,8 +6,11 @@ export default async function checkLoggedInStatus() {
   });
   const data = await response.json();
   if (!response.ok) {
+    // eslint-disable-next-line no-console
     console.log(data);
     return null;
   }
+  // eslint-disable-next-line no-console
+  console.log(data);
   return data;
 }
