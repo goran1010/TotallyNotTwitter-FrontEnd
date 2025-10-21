@@ -5,19 +5,27 @@ import UserContext from "./utils/UserContext";
 
 function Root() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchStatus() {
       const loggedInUser = await checkLoggedInStatus();
       setUser(loggedInUser);
+      setLoading(false);
     }
     fetchStatus();
   }, []);
 
   return (
-    <UserContext value={{ user, setUser }}>
-      <Outlet />
-    </UserContext>
+    <div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <UserContext value={{ user, setUser }}>
+          <Outlet />
+        </UserContext>
+      )}
+    </div>
   );
 }
 
