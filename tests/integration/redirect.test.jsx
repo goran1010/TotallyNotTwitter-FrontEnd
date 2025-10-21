@@ -7,7 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { beforeEach, afterEach } from "vitest";
 import { screen } from "@testing-library/react";
 
-describe("redirect if no user", () => {
+describe("Redirect if no user logged in", () => {
   let globalFetch;
 
   beforeEach(() => {
@@ -33,6 +33,36 @@ describe("redirect if no user", () => {
     const heading = await screen.findByRole("heading", {
       name: "Please log in",
     });
+    expect(heading).toBeInTheDocument();
+  });
+});
+
+describe("Redirect if there is a user logged in", () => {
+  let globalFetch;
+
+  beforeEach(() => {
+    globalFetch = global.fetch;
+    global.fetch = vi.fn();
+  });
+
+  afterEach(() => {
+    global.fetch = globalFetch;
+  });
+
+  test("from login to home", async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => {
+        return { id: 1, username: "user" };
+      },
+    });
+
+    const router = createMemoryRouter(routes, {
+      initialEntries: ["/login"],
+    });
+    render(<RouterProvider router={router} />);
+
+    const heading = await screen.findByText("Placeholder Text for Home");
     expect(heading).toBeInTheDocument();
   });
 });
