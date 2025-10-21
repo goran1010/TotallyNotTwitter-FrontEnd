@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import checkLoggedInStatus from "./utils/checkLoggedInStatus";
 import UserContext from "./utils/UserContext";
+import Spinner from "@goran1010/spinner";
 
 function Root() {
   const [user, setUser] = useState(null);
@@ -17,15 +18,15 @@ function Root() {
   }, []);
 
   return (
-    <div>
+    <>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : (
         <UserContext value={{ user, setUser }}>
           <Outlet />
         </UserContext>
       )}
-    </div>
+    </>
   );
 }
 
