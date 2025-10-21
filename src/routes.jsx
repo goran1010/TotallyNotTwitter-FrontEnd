@@ -34,7 +34,7 @@ const routes = [
         element: <IsLoggedIn />,
         children: [
           {
-            path: "/",
+            path: "",
             element: <Main />,
             children: [
               { index: true, element: <Navigate to="home" replace /> },
