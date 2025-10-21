@@ -10,9 +10,16 @@ function Root() {
 
   useEffect(() => {
     async function fetchStatus() {
-      const loggedInUser = await checkLoggedInStatus();
-      setUser(loggedInUser);
-      setLoading(false);
+      try {
+        const loggedInUser = await checkLoggedInStatus();
+        setUser(loggedInUser);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch login status:", err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchStatus();
   }, []);

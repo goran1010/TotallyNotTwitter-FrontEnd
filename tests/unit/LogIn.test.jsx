@@ -2,6 +2,15 @@ import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import LogIn from "../../src/components/LogIn";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useOutletContext: () => ({ setUser: vi.fn() }),
+  };
+});
 
 describe("Log In component", () => {
   test("Render component", () => {

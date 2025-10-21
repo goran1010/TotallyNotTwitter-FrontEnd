@@ -5,6 +5,8 @@ import routes from "../../src/routes";
 import { RouterProvider } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, vi, afterEach } from "vitest";
+import checkLoggedInStatus from "../../src/utils/checkLoggedInStatus";
+vi.mock("../../src/utils/checkLoggedInStatus");
 
 describe("Render components through url", () => {
   test("Error Page for non-existent url", () => {
@@ -17,25 +19,29 @@ describe("Render components through url", () => {
     expect(text).toBeInTheDocument();
   });
 
-  test("Signup Page", () => {
+  test("Signup Page", async () => {
+    checkLoggedInStatus.mockResolvedValue(null);
+
     const router = createMemoryRouter(routes, {
       initialEntries: ["/signup"],
     });
     render(<RouterProvider router={router} />);
 
-    const heading = screen.getByRole("heading", {
+    const heading = await screen.findByRole("heading", {
       name: "Create your account",
     });
     expect(heading).toBeInTheDocument();
   });
 
-  test("Login Page", () => {
+  test("Login Page", async () => {
+    checkLoggedInStatus.mockResolvedValue(null);
+
     const router = createMemoryRouter(routes, {
       initialEntries: ["/login"],
     });
     render(<RouterProvider router={router} />);
 
-    const heading = screen.getByRole("heading", {
+    const heading = await screen.findByRole("heading", {
       name: "Please log in",
     });
     expect(heading).toBeInTheDocument();
@@ -55,6 +61,8 @@ describe("redirects after fetching", () => {
   });
 
   test("SignUp redirect to LogIn after success", async () => {
+    checkLoggedInStatus.mockResolvedValue(null);
+
     global.fetch.mockResolvedValueOnce({
       ok: true,
       status: 201,
@@ -67,7 +75,7 @@ describe("redirects after fetching", () => {
     });
     render(<RouterProvider router={router} />);
 
-    const button = screen.getByRole("button", { name: /create/i });
+    const button = await screen.findByRole("button", { name: /create/i });
     expect(button).toBeInTheDocument();
 
     await user.click(button);
