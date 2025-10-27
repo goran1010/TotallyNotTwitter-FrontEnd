@@ -11,29 +11,39 @@ export default function Profile() {
   const [preview, setPreview] = useState(null);
 
   async function handleLogOut() {
-    const response = await fetch(`${VITE_URL}/auth/log-out`, {
-      mode: "cors",
-      method: "GET",
-      credentials: "include",
-    });
-    await response.json();
-    if (response.ok) {
-      setUser(null);
+    try {
+      const response = await fetch(`${VITE_URL}/status/logout`, {
+        mode: "cors",
+        method: "POST",
+        credentials: "include",
+      });
+      await response.json();
+      if (response.ok) {
+        setUser(null);
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
     }
   }
 
   useEffect(() => {
     async function getProfileImage() {
-      const response = await fetch(
-        `${VITE_URL}/auth/profile-image?userId=${user.id}`,
-        {
-          method: "GET",
-          mode: "cors",
+      try {
+        const response = await fetch(
+          `${VITE_URL}/auth/profile-image?userId=${user.id}`,
+          {
+            method: "GET",
+            mode: "cors",
+          }
+        );
+        const profileImage = await response.json();
+        if (response.ok) {
+          setPreview(profileImage);
         }
-      );
-      const profileImage = await response.json();
-      if (response.ok) {
-        setPreview(profileImage);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
       }
     }
     if (user?.id) {
