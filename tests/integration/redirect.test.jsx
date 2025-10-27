@@ -7,18 +7,18 @@ import { RouterProvider } from "react-router-dom";
 import { beforeEach, afterEach } from "vitest";
 import { screen } from "@testing-library/react";
 
+let globalFetch;
+
+beforeEach(() => {
+  globalFetch = global.fetch;
+  global.fetch = vi.fn();
+});
+
+afterEach(() => {
+  global.fetch = globalFetch;
+});
+
 describe("Redirect if no user logged in", () => {
-  let globalFetch;
-
-  beforeEach(() => {
-    globalFetch = global.fetch;
-    global.fetch = vi.fn();
-  });
-
-  afterEach(() => {
-    global.fetch = globalFetch;
-  });
-
   test("from home to login", async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
@@ -38,17 +38,6 @@ describe("Redirect if no user logged in", () => {
 });
 
 describe("Redirect if there is a user logged in", () => {
-  let globalFetch;
-
-  beforeEach(() => {
-    globalFetch = global.fetch;
-    global.fetch = vi.fn();
-  });
-
-  afterEach(() => {
-    global.fetch = globalFetch;
-  });
-
   test("from login to home", async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
