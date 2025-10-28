@@ -5,8 +5,8 @@ const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
 
 export default function Profile() {
   const { user, setUser } = useContext(UserContext);
-  const [firstName, setFirstName] = useState(user.userInfo?.firstName || "");
-  const [lastName, setLastName] = useState(user.userInfo?.lastName || "");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const [preview, setPreview] = useState(null);
 
@@ -28,18 +28,21 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    async function getProfileImage() {
+    async function getProfile() {
       try {
         const response = await fetch(
-          `${VITE_URL}/auth/profile-image?userId=${user.id}`,
+          `${VITE_URL}/api/profile?userId=${user.id}`,
           {
             method: "GET",
             mode: "cors",
           }
         );
-        const profileImage = await response.json();
+        const profile = await response.json();
         if (response.ok) {
-          setPreview(profileImage);
+          console.log(profile);
+          setPreview(profile.avatar || null);
+          setFirstName(profile.firstName || "");
+          setLastName(profile.lastName || "");
         }
       } catch (err) {
         // eslint-disable-next-line no-console
@@ -47,7 +50,7 @@ export default function Profile() {
       }
     }
     if (user?.id) {
-      getProfileImage();
+      getProfile();
     }
   }, [user?.id]);
 

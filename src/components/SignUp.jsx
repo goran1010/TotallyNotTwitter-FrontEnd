@@ -35,13 +35,15 @@ export default function SignUp() {
           ["confirm-password"]: inputFields["confirm-password"],
         }),
       });
-
-      if (!response?.ok) {
-        return console.log(response);
+      const data = await response.json();
+      if (!response.ok) {
+        // eslint-disable-next-line no-console
+        return console.log(data);
       }
-      await response.json();
+
       navigator("/login");
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   }
