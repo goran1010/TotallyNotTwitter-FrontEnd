@@ -77,17 +77,20 @@ export default function Profile() {
     form.append("userId", user.id);
     form.append("firstName", firstName);
     form.append("lastName", lastName);
-    form.append("image", image.current.files[0]);
+    form.append("avatar", image.current.files[0]);
 
-    const response = await fetch(`${VITE_URL}/auth/update-profile`, {
+    const response = await fetch(`${VITE_URL}/status/update-profile`, {
       method: "PUT",
       mode: "cors",
       credentials: "include",
       body: form,
     });
-    const result = await response.json();
+    const profile = await response.json();
     if (response.ok) {
-      setUser(result);
+      console.log(profile);
+      setPreview(profile.avatar || null);
+      setFirstName(profile.firstName || "");
+      setLastName(profile.lastName || "");
     }
   }
 
