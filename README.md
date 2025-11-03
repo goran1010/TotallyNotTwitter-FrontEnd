@@ -8,10 +8,10 @@ A very simple project with session based auth using Passport, ability to customi
 
 ```bash
 # Clone the repository
-git clone git@github.com:goran1010/memory-card-game.git
+git clone git@github.com:goran1010/TotallyNotTwitter-FrontEnd.git
 
 # Navigate to project directory
-cd memory-card-game
+cd TotallyNotTwitter-FrontEnd
 
 # Install dependencies
 npm install
