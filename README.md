@@ -1,6 +1,6 @@
 # Totally Not Twitter
 
-Front-end for my Totally Not Twitter app built with React and Tailwind.
+Front-end for Totally Not Twitter app built with React and Tailwind.
 
 A very simple project with session based auth using Passport, ability to customize your Profile, add and follow people and like and comment on posts.
 
